@@ -1,6 +1,7 @@
-import { Component } from "react";
+import React from 'react';
+import { Carousel, Container } from "react-bootstrap";
 
-class Profile extends Component {
+class About extends React.Component {
 
   render() {
 
@@ -8,60 +9,57 @@ class Profile extends Component {
 
 
     // return <ListGroup.Item key={idx}>Title:{flick.title}, Overview:{flick.overview}</ListGroup.Item>
-  return(
-    <>
-    <Container>
-    <Carousel variant="dark" >
-      <Carousel.Item key={idx}>
-        <img
-          style={{ 'height': "600px", 'width': "300px" }}
-          className='d-block w-100'
-          src={flick.img_url}
-          alt={flick.title}
-        />
-        <Carousel.Caption id="carousel-caption">
-          <h3>Sam Brindle</h3>
-          <h4>Software Developer</h4>
-          <p>~INSERT BIO HERE~</p>
-        </Carousel.Caption>
-      </Carousel.Item>
+    return (
+      <>
+        <Container>
+          <Carousel variant="dark" >
+            <Carousel.Item>
+              <img
+                style={{ 'height': "600px", 'width': "300px" }}
+                className='d-block w-100'
+                src="https://via.placeholder.com/150"
+                alt="Sam"
+              />
+              <Carousel.Caption id="carousel-caption">
+                <h3>Sam Brindle</h3>
+                <h4>Software Developer</h4>
+                <p>~INSERT BIO HERE~</p>
+              </Carousel.Caption>
+            </Carousel.Item>
 
-      <Carousel.Item key={idx}>
-        <img
-          style={{ 'height': "600px", 'width': "300px" }}
-          className='d-block w-100'
-          src={flick.img_url}
-          alt={flick.title}
-        />
-        <Carousel.Caption id="carousel-caption">
-          <h3>Sam Brindle</h3>
-          <h4>Software Developer</h4>
-          <p>~INSERT BIO HERE~</p>
-        </Carousel.Caption>
-      </Carousel.Item>
+            <Carousel.Item >
+              <img
+                style={{ 'height': "600px", 'width': "300px" }}
+                className='d-block w-100'
+                src="https://via.placeholder.com/150"
+                alt="Ben"
+              />
+              <Carousel.Caption id="carousel-caption">
+                <h3>Ben Choe</h3>
+                <h4>Software Developer</h4>
+                <p>~INSERT BIO HERE~</p>
+              </Carousel.Caption>
+            </Carousel.Item>
 
-      <Carousel.Item key={idx}>
-        <img
-          style={{ 'height': "600px", 'width': "300px" }}
-          className='d-block w-100'
-          src={flick.img_url}
-          alt={flick.title}
-        />
-        <Carousel.Caption id="carousel-caption">
-          <h3>Sam Brindle</h3>
-          <h4>Software Developer</h4>
-          <p>~INSERT BIO HERE~</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-    </Carousel>
-  </Container>
-        </>
+            <Carousel.Item >
+              <img
+                style={{ 'height': "600px", 'width': "300px" }}
+                className='d-block w-100'
+                src="https://via.placeholder.com/150"
+                alt="Vinny"
+              />
+              <Carousel.Caption id="carousel-caption">
+                <h3>Vinny Shipley</h3>
+                <h4>Software Developer</h4>
+                <p>~INSERT BIO HERE~</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+          </Carousel>
+        </Container>
+      </>
     )
 
-  // render() {
-  //   /* TODO: render information about the developers */
-  //   return <p>Profile page coming soon</p>
-  // }
-};
+  };
+}
 
-export default Profile;
+export default About;
