@@ -14,16 +14,19 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Header />
-        <Switch>
-          <Route path="/" >
-            <BestBooks />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-        </Switch>
-        <Footer />
+        <Router>
+          <Header />
+          <Switch>
+            <Route exact path="/">
+              <BestBooks/>
+            </Route>
+            <Route path="/about">
+              <About />
+            </Route>
+            {/* PLACEHOLDER: add a route with a path of '/about' that renders the `About` component */}
+          </Switch>
+          <Footer />
+        </Router>
       </>
     )
   }
