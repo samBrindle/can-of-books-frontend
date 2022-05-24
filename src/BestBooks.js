@@ -4,7 +4,6 @@ import { Carousel, Container, ListGroup } from 'react-bootstrap';
 require('dotenv').config();
 
 
-let SERVER = process.env.REACT_APP_SERVER;
 
 export default class BestBooks extends React.Component {
   constructor(props) {
@@ -13,16 +12,8 @@ export default class BestBooks extends React.Component {
       books: []
     }
   }
-
+  
   /* TODO: Make a GET request to your API to fetch all the books from the database  */
-
-  componentDidMount = async () => {
-    let results = await axios.get(`${SERVER}/books`);
-    console.log(results);
-    this.setState({
-      books: results.data
-    });
-  }
 
   render() {
 
@@ -72,13 +63,13 @@ class BestBook extends React.Component {
       book = this.props.book
     };
   }
-
   render () {
     return (
       <ListGroup.Item>{book.title}
         <Button 
           variant="danger"
-          ></Button>
+          type="button"
+        >Delete</Button>
       </ListGroup.Item>
     )
   }
