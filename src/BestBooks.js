@@ -1,12 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import { Carousel, Container } from 'react-bootstrap';
+import { Carousel, Container, ListGroup } from 'react-bootstrap';
 require('dotenv').config();
 
 
 let SERVER = process.env.REACT_APP_SERVER;
 
-class BestBooks extends React.Component {
+export default class BestBooks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -65,4 +65,21 @@ class BestBooks extends React.Component {
   }
 }
 
-export default BestBooks;
+class BestBook extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      book = this.props.book
+    };
+  }
+
+  render () {
+    return (
+      <ListGroup.Item>{book.title}
+        <Button 
+          variant="danger"
+          ></Button>
+      </ListGroup.Item>
+    )
+  }
+}
