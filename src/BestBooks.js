@@ -72,13 +72,13 @@ class BestBook extends React.Component {
       book = this.props.book
     };
   }
-
   render () {
     return (
       <ListGroup.Item>{book.title}
         <Button 
           variant="danger"
-          ></Button>
+          type="button"
+        >Delete</Button>
       </ListGroup.Item>
     )
   }
