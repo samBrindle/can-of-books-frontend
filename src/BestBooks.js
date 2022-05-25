@@ -4,6 +4,16 @@ require('dotenv').config();
 
 export default class BestBooks extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: undefined,
+      description: undefined,
+      status: undefined,
+      books: []
+    };
+  }
+
   render() {
     return (
       <>
@@ -24,7 +34,8 @@ class BestBook extends React.Component {
   render() {
     return (
       <ListGroup.Item>
-        {this.props.book.title}
+        <h3>{this.props.book.title}</h3>
+        <p>{this.props.book.description}</p>
         <button onClick={() => this.props.onBookDelete(this.props.book._id)}>Delete</button>
       </ListGroup.Item>
     )
@@ -37,7 +48,8 @@ class NewBook extends React.Component {
     this.state = {
       title: undefined,
       description: undefined,
-      status: undefined
+      status: undefined,
+      books: []
     };
   }
   handleTitleChange = (e) => {
@@ -62,7 +74,11 @@ class NewBook extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.onBookCreate(this.state);
+    this.setState({
+      books:[...this.state.books, this.state]
+    })
   }
+  
 
   render() {
     return (

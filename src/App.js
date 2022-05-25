@@ -33,12 +33,13 @@ class App extends React.Component {
   createBooks = (booksToCreate) => {
     console.log(booksToCreate);
     axios.post(`${SERVER}/books`, booksToCreate)
-      .then(res => { console.log(res); this.setState({ books: res.data }); })
+      .then(res => { console.log(res); this.setState({ books: [...this.state.books, res.data] }); })
       .catch(err => { console.log(err) });
   }
 
   deleteBooks = (bookIdToDelete) => {
-     axios.delete(`${SERVER}/books`, bookIdToDelete)
+    console.log(bookIdToDelete)
+     axios.delete(`${SERVER}/books/${bookIdToDelete}`)
       .then(res => { console.log(res); this.setState({ books: this.state.books.filter(stateBooks => stateBooks._id !== bookIdToDelete) }) })
       .catch(err => { console.log(err) });
   }
