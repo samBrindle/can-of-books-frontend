@@ -20,12 +20,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: {},
+      books: [],
     }
   }
 
-  getBooks = (booksToRetrieve) => {
-    axios.get(`${SERVER}/books`, booksToRetrieve)
+  getBooks = () => {
+    axios.get(`${SERVER}/books`)
       .then(res => { console.log(res); this.setState({ books: res.data }); })
       .catch(err => { console.log(err) });
   }
@@ -41,6 +41,10 @@ class App extends React.Component {
      axios.delete(`${SERVER}/books`, bookIdToDelete)
       .then(res => { console.log(res); this.setState({ books: this.state.books.filter(stateBooks => stateBooks._id !== bookIdToDelete) }) })
       .catch(err => { console.log(err) });
+  }
+
+  componentDidMount = async () => {
+    await this.getBooks()
   }
 
   render() {

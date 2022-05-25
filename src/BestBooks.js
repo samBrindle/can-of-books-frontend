@@ -1,6 +1,5 @@
 import React from 'react';
-import { Form, Button } from 'react-bootstrap';
-import ListGroup from 'react-bootstrap/ListGroup';
+import { Form, Button, ListGroup } from 'react-bootstrap';
 require('dotenv').config();
 
 export default class BestBooks extends React.Component {
@@ -8,11 +7,13 @@ export default class BestBooks extends React.Component {
   render() {
     return (
       <>
+      {this.props.books.length && 
         <ListGroup>
-          {this.props.books.length && this.props.books.map(book => (
-            <BestBook book={book} onBookDelete={this.props.onBookDelete} />
+          {this.props.books.map(book => (
+            <BestBook key={book._id} book={book} onBookDelete={this.props.onBookDelete} />
           ))}
         </ListGroup>
+      }
         <NewBook onBookCreate={this.props.onBookCreate} />
       </>
     )
@@ -22,8 +23,9 @@ export default class BestBooks extends React.Component {
 class BestBook extends React.Component {
   render() {
     return (
-      <ListGroup.Item key={this.props.book._id}>{this.props.book.title}
-        <button onClick={this.props.onBookDelete(this.props.book._id)}>Delete</button>
+      <ListGroup.Item>
+        {this.props.book.title}
+        <button onClick={() => this.props.onBookDelete(this.props.book._id)}>Delete</button>
       </ListGroup.Item>
     )
   }
