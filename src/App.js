@@ -44,6 +44,22 @@ class App extends React.Component {
       .catch(err => { console.log(err) });
   }
 
+  updateBooks =  (bookToUpdate) => {
+    try {
+      console.log("LOOK HERE: " + bookToUpdate._id);
+      let updateBook = axios.put(`${SERVER}/books/${bookToUpdate._id}`, bookToUpdate)
+      let newBooksArray = this.state.books.map(book => {
+        return book._id === bookToUpdate._id
+        ? updateBook.data : book
+      });
+      this.setState({
+        books:newBooksArray
+      })
+    } catch(error) {
+      console.log(error.response.data);
+    }
+  }
+
   componentDidMount = async () => {
     await this.getBooks()
   }
@@ -59,6 +75,7 @@ class App extends React.Component {
                 <BestBooks 
                 onBookCreate={this.createBooks}
                 onBookDelete={this.deleteBooks} 
+                updateBook={this.updateBooks}
                 books={this.state.books} />
               </Route>
               <Route path="/about">

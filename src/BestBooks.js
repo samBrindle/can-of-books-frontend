@@ -1,4 +1,5 @@
 import React from 'react';
+import UpdateBookForm from './UpdateBookForm';
 import { Form, Button, ListGroup } from 'react-bootstrap';
 require('dotenv').config();
 
@@ -17,13 +18,13 @@ export default class BestBooks extends React.Component {
   render() {
     return (
       <>
-      {this.props.books.length && 
-        <ListGroup>
-          {this.props.books.map(book => (
-            <BestBook key={book._id} book={book} onBookDelete={this.props.onBookDelete} />
-          ))}
-        </ListGroup>
-      }
+        {this.props.books.length &&
+          <ListGroup>
+            {this.props.books.map(book => (
+              <BestBook key={book._id} book={book} onBookDelete={this.props.onBookDelete} updateBook={this.props.updateBook} />
+            ))}
+          </ListGroup>
+        }
         <NewBook onBookCreate={this.props.onBookCreate} />
       </>
     )
@@ -31,13 +32,34 @@ export default class BestBooks extends React.Component {
 }
 
 class BestBook extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showUpdateForm: false
+    }
+  }
+
   render() {
     return (
-      <ListGroup.Item>
-        <h3>{this.props.book.title}</h3>
-        <p>{this.props.book.description}</p>
-        <button onClick={() => this.props.onBookDelete(this.props.book._id)}>Delete</button>
-      </ListGroup.Item>
+      <>
+        <ListGroup.Item>
+          <h3>{this.props.book.title}</h3>
+          <p>{this.props.book.description}</p>
+          <Button
+            onClick={() => this.setState({ showUpdateForm: true })}
+          >
+            Update Book
+          </Button>
+          <Button variant='danger' onClick={() => this.props.onBookDelete(this.props.book._id)}>Delete</Button>
+        </ListGroup.Item>
+        {
+          this.state.showUpdateForm &&
+          <UpdateBookForm
+            book={this.props.book}
+            updateBook={this.props.updateBook}
+          />
+        }
+      </>
     )
   }
 }
@@ -56,29 +78,23 @@ class NewBook extends React.Component {
     this.setState({
       title: e.target.value,
     });
-    console.log(this.state);
   }
   handleDescriptionChange = (e) => {
     this.setState({
       description: e.target.value,
     });
-    console.log(this.state);
-  } 
+  }
   handleStatusChange = (e) => {
     this.setState({
       status: e.target.checked
     });
-    console.log(this.state);
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.onBookCreate(this.state);
-    this.setState({
-      books:[...this.state.books, this.state]
-    })
   }
-  
+
 
   render() {
     return (
@@ -93,7 +109,7 @@ class NewBook extends React.Component {
 
         <Form.Group className="mb-3" >
           <Form.Label>Description</Form.Label>
-          <Form.Control type="text" placeholder="Enter Description" name="description" onChange={this.handleDescriptionChange}/>
+          <Form.Control type="text" placeholder="Enter Description" name="description" onChange={this.handleDescriptionChange} />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
           <Form.Check type="checkbox" label="Did you do your homework?" ref="status" onChange={this.handleStatusChange} />
