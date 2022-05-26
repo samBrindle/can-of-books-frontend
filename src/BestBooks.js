@@ -10,8 +10,7 @@ export default class BestBooks extends React.Component {
     this.state = {
       title: undefined,
       description: undefined,
-      status: undefined,
-      books: []
+      status: undefined
     };
   }
 
