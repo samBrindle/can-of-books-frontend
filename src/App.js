@@ -1,4 +1,7 @@
 import React from 'react';
+import { withAuth0 } from '@auth0/auth0-react';
+import LoginButton from './LoginButton';
+import LogoutButton from './LogoutButton';
 import Header from './Header';
 import Footer from './Footer';
 import BestBooks from './BestBooks';
@@ -24,10 +27,18 @@ class App extends React.Component {
     }
   }
 
-  getBooks = () => {
+  getBooks = async () => {
+    if (this.props.auth0.isAuthenticated) {
+      
+      const res = await this.props.auth0.getIdTokenClaims();
+
+      const jwt = res.__raw;
+      console.log(jwt);
+    
     axios.get(`${SERVER}/books`)
       .then(res => { console.log(res); this.setState({ books: res.data }); })
       .catch(err => { console.log(err) });
+    }
   }
 
   createBooks = (booksToCreate) => {
@@ -39,23 +50,23 @@ class App extends React.Component {
 
   deleteBooks = (bookIdToDelete) => {
     console.log(bookIdToDelete)
-     axios.delete(`${SERVER}/books/${bookIdToDelete}`)
+    axios.delete(`${SERVER}/books/${bookIdToDelete}`)
       .then(res => { console.log(res); this.setState({ books: this.state.books.filter(stateBooks => stateBooks._id !== bookIdToDelete) }) })
       .catch(err => { console.log(err) });
   }
 
-  updateBooks =  (bookToUpdate) => {
+  updateBooks = (bookToUpdate) => {
     try {
       console.log("LOOK HERE: " + bookToUpdate._id);
       let updateBook = axios.put(`${SERVER}/books/${bookToUpdate._id}`, bookToUpdate)
       let newBooksArray = this.state.books.map(book => {
         return book._id === bookToUpdate._id
-        ? updateBook.data : book
+          ? updateBook.data : book
       });
       this.setState({
-        books:newBooksArray
+        books: newBooksArray
       })
-    } catch(error) {
+    } catch (error) {
       console.log(error.response.data);
     }
   }
@@ -72,11 +83,23 @@ class App extends React.Component {
           <main>
             <Switch>
               <Route exact path="/">
-                <BestBooks 
-                onBookCreate={this.createBooks}
-                onBookDelete={this.deleteBooks} 
-                updateBook={this.updateBooks}
-                books={this.state.books} />
+                {this.props.auth0.isAuthenticated
+                  ?
+                  <LogoutButton />
+                  :
+                  <LoginButton />
+                }
+                {
+                  this.props.auth0.isAuthenticated
+                  ?
+                  <BestBooks
+                    onBookCreate={this.createBooks}
+                    onBookDelete={this.deleteBooks}
+                    updateBook={this.updateBooks}
+                    books={this.state.books} />
+                  :
+                  <p>Welcome! Please login.</p>
+                }
               </Route>
               <Route path="/about">
                 <About />
@@ -91,4 +114,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withAuth0(App);
